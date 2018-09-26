@@ -1,20 +1,20 @@
 class Ship:
-    def __init__(self, squares):
-        self.squares = squares
+    def __init__(self, units):
+        self.units = units
         self.built = 0
         self.destroyed = 0
 
     def isBuilt(self):
-        if self.built >= self.squares:
+        if self.built >= self.units:
             return True
         else:
             return False
 
     def toBuild(self):
-        return self.squares - self.built
+        return self.units - self.built
 
     def isDestroyed(self):
-        if self.destroyed >= self.squares:
+        if self.destroyed >= self.units:
             return True
         else:
             return False
