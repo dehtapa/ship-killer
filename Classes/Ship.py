@@ -20,7 +20,7 @@ class Ship:
             return False
 
     def build(self):
-        print('build')
+        # print('build')
         self.built += 1
 
     def destroy(self):

@@ -1,10 +1,11 @@
+import tkinter as tk
+import playsound
+from gtts import gTTS
+import os
 from Player import *
 from Ship import *
 from Table import *
 from Window import *
-import tkinter as tk
-import playsound
-import pyttsx3
 
 
 class Game:
@@ -18,11 +19,10 @@ class Game:
     currentPlayer = 1
     gameStatus = 1
     gameRound = 0
-    engine = pyttsx3.init()
     messages = {
-        'score': ['Eltaláltam, menő vagyok', 'Talált! kezdők szerencséje.'],
-        'fault': ['Nem talált, biztos csaltál!', 'Már megint elbénáztad!'],
-        'ship': ['A király ismét süllyesztett', 'Elsüllyedt! Mázlista!']
+        'score': ['Easy.', 'You just got lucky.'],
+        'fault': ['I was aiming for the water anyway.', 'Haha, not even close.'],
+        'ship': ['I\'ve just sank your ship. Are you even trying?', 'You sank my ship! How dare you?']
     }
 
     def __init__(self, root, numberOfShips, rows):
@@ -31,6 +31,12 @@ class Game:
         self.rows = rows
         # Start process
         self.start_game()
+
+    def gttsSay(self, text):
+        tts = gTTS(text=text, lang='en')
+        tts.save("temp.mp3")
+        playsound.playsound("temp.mp3")
+        os.remove("temp.mp3")
 
     def start_game(self):
         self.window = Window(self)
@@ -47,18 +53,13 @@ class Game:
         self.window.message4.set(self.player[self.currentPlayer].get_ship_message()[2])
         self.window.message5.set(value=self.player[self.currentPlayer].get_ship_message()[3])
 
-        self.engine.setProperty('voice', 'hungarian')
-
         self.root.after(
-            3000, lambda: self.say('Rakd le a hajóidat!'))
+            1200, lambda: self.gttsSay('Place your ships'))
+
         # def auto_fill(self):
         # self.buttonFired(self.currentPlayer, 4,4)
         # self.buttonFired(self.currentPlayer, 5,3)
         # self.buttonFired(self.currentPlayer, 6,6)
-
-    def say(self, text):
-        self.engine.say(text)
-        self.engine.runAndWait()
 
     def auto_fill_both(self):
         self.player[1].auto_fill()
@@ -125,14 +126,17 @@ class Game:
         if id == self.currentPlayer:
             if self.gameStatus == 2:
                 self.window.run_animate(0)
-                playsound.playsound('/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/Torpedo+Explosion.wav', True)
-
+                playsound.playsound(
+                    '/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/Sounds/Torpedo+Explosion.wav', True)
+                # playsound.playsound('Torpedo+Explosion.wav', True)
                 messageId = self.player[self.currentPlayer].get_shot(row, column)
                 message = self.messages[messageId][self.currentPlayer - 1]
                 if messageId == 'score' or messageId == 'ship':
-                    playsound.playsound('/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/Explosion+9.wav', True)
+                    playsound.playsound(
+                        '/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/Sounds/Explosion+9.wav', True)
+                    # playsound.playsound('Explosion+9.wav', True)
                 self.window.message7.set(message)
-                self.say(message)
+                self.gttsSay(message)
 
                 robot = self.player[self.currentPlayer].robot
 
@@ -149,13 +153,13 @@ class Game:
                     self.window.message1.set(
                         '%s won the game!!!' %
                         self.player[1].name)
-                    self.say('Nyertél, de csak mert hagytam magam!')
+                    self.gttsSay('Nyertél, de csak mert hagytam magam!')
                 if self.player[1].destroyedShips == self.numberOfShips:
                     self.winner = 2
                     self.window.message1.set(
                         '%s won the game!!!' %
                         self.player[2].name)
-                    self.say('Ismét a jobbik győzött!')
+                    self.gttsSay('Ismét a jobbik győzött!')
                 if self.currentPlayer == 1:
                     self.currentPlayer = 2
                 else:

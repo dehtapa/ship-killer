@@ -42,15 +42,16 @@ class Player:
     def place_ships(self, row, column):
         if self.check_field_valid():
             self.shipCoordinates.update_matrix(row, column, self.currentShip)
-            #print('placing ships')
+            # print('placing ships')
             if self.id is 1:
                 self.table[row][column]["bg"] = "green"
             self.ships[self.currentShip].build()
             if self.ships[self.currentShip].isBuilt() is True:
-                texts = ['Na végre!', 'Elaludtál?!', 'Még ma sikerül leraknod?', 'Na mi van már?']
+                texts = ['Finally', 'Even my grandmother is faster', 'I am falling asleep over here',
+                         'Could you hurry up a bit?']
                 self.currentShip -= 1
                 if self.id is 1:
-                    self.master.say(texts[self.currentShip])
+                    self.master.gttsSay(texts[self.currentShip])
 
             if self.currentShip <= 0:
                 return 'next'
@@ -58,7 +59,7 @@ class Player:
                 return self.get_ship_message()
 
     def get_ship_message(self):
-        #print('get message')
+        # print('get message')
         # print(self.ships[self.currentShip].toBuild())
         contain = self.currentShip
         more = self.ships[self.currentShip].toBuild()
@@ -107,29 +108,29 @@ class Player:
     pass
 
     def setFieldsUnavailable(self, neighbours):
-        #neighbours = [(8, 1), (8, 2), (8, 3), (9, 1), (9, 3), (10, 1), (10, 2), (10, 3)]
+        # neighbours = [(8, 1), (8, 2), (8, 3), (9, 1), (9, 3), (10, 1), (10, 2), (10, 3)]
         for field in neighbours:
             row = field[0]
             column = field[1]
             self.table[row][column]["bg"] = "yellow"
-            #self.shipCoordinates.update_matrix(row, column, "x")
+            # self.shipCoordinates.update_matrix(row, column, "x")
 
     def ifAvailable(self, row, column, size, alignment):
-        # alignment; horizontal = 1, vertical= 2        
+        # alignment; horizontal = 1, vertical= 2
         available = False
-        for i in range(size):     
+        for i in range(size):
             if alignment is 1:  # check horizontal
-                #coords = self.neighbors(row+i, column)
-                #print(coords)
-                #self.setFieldsUnavailable(coords)
+                # coords = self.neighbors(row+i, column)
+                # print(coords)
+                # self.setFieldsUnavailable(coords)
                 if self.shipCoordinates.matrix[row + i][column] == '':
                     available = True
-                else: 
+                else:
                     return False
             else:  # check vertical
-                #coords = self.neighbors(row, column+i)
-                #print(coords)
-                #self.setFieldsUnavailable(coords)
+                # coords = self.neighbors(row, column+i)
+                # print(coords)
+                # self.setFieldsUnavailable(coords)
                 if self.shipCoordinates.matrix[row][column + i] == '':
                     available = True
                 else:
@@ -139,5 +140,5 @@ class Player:
     # return neighbours of [x,y]
 
     def check_field_valid(self):
-       # print('validity check')
+        # print('validity check')
         return True

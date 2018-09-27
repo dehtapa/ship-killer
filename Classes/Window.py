@@ -37,8 +37,8 @@ class Window:
         self.buttonClearShips.grid(row=11, column=20)
         self.buttonCheat = Button(self.master.root, text="Cheat", command=self.master.cheatActivate)
         self.buttonCheat.grid(row=12, column=20)
-        self.buttonComputerCheat = Button(self.master.root, text="Computer cheat", command=self.master.computerCheat)
-        
+        self.buttonComputerCheat = Button(self.master.root, text="Computer off", command=self.master.computerCheat)
+
     def init_image(self):
         self.img = Label(self.master.root)
         gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
@@ -61,7 +61,8 @@ class Window:
         else:
             self.counter = 0
             gif1 = PhotoImage(
-                file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif', format='gif -index %s' % 0)
+                file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+                     format='gif -index %s' % 0)
             self.img.image = gif1
             self.img.configure(image=gif1)
 
