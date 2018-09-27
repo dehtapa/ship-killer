@@ -32,3 +32,4 @@ class Window:
         self.buttonCreateShips.grid(row=9, column=20)
         self.buttonClearShips = Button(self.master.root, text="Clear ships", command=self.master.clear_ships)
         self.buttonClearShips.grid(row=11, column=20)
+
