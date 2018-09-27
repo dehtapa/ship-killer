@@ -41,7 +41,7 @@ class Window:
 
     def init_image(self):
         self.img = Label(self.master.root)
-        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/GIFs/giphy.gif',
                           format='gif -index %s' % 0)
         self.img.image = gif1
         self.img.configure(image=gif1)
@@ -50,7 +50,7 @@ class Window:
 
     def run_animate(self, ind):
         self.counter += 1
-        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/GIFs/giphy.gif',
                           format='gif -index %s' % ind)
         ind += 1
         self.img.image = gif1
@@ -61,14 +61,14 @@ class Window:
         else:
             self.counter = 0
             gif1 = PhotoImage(
-                file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+                file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/GIFs/giphy.gif',
                      format='gif -index %s' % 0)
             self.img.image = gif1
             self.img.configure(image=gif1)
 
     def change_image(self, ind):
         print(ind)
-        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/GIFs/giphy.gif',
                           format='gif -index %s' % ind)
         self.img.image = gif1
         self.img.configure(image=gif1)
