@@ -41,7 +41,7 @@ class Player:
     def place_ships(self, row, column):
         if self.check_field_valid():
             self.shipCoordinates.update_matrix(row, column, self.currentShip)
-            print('placing ships')
+            #print('placing ships')
             if self.id is 1:
                 self.table[row][column]["bg"] = "green"
             self.ships[self.currentShip].build()
@@ -69,13 +69,13 @@ class Player:
         for i in range(size):
             shipAlignment = random.randint(
                 1, 2)  # horizontal = 1, veritcal = 2
-            row = random.randint(1, 9)
-            column = random.randint(1, 9)
+            row = random.randint(2, 9)
+            column = random.randint(2, 9)
             if shipAlignment is 1:
                 while row + size > 10 or not self.ifAvailable(
                         row, column, size, shipAlignment):  # if out of bonds OR places are taken
-                    row = random.randint(1, 9)
-                    column = random.randint(1, 9)
+                    row = random.randint(2, 9)
+                    column = random.randint(2, 9)
                 for j in range(0, size):
                     # use this method to place them next to eachoter - it makes
                     # them as one ship
@@ -83,44 +83,50 @@ class Player:
             else:
                 while column + size > 10 or not self.ifAvailable(
                         row, column, size, shipAlignment):  # if out of bonds OR places are taken
-                    row = random.randint(1, 9)
-                    column = random.randint(1, 9)
+                    row = random.randint(2, 9)
+                    column = random.randint(2, 9)
                 for j in range(0, size):
                     self.place_ships(row, column + j)
             size -= 1
 
+    def neighbors(self, x, y):
+        X = 10
+        Y = 10
+        return [(x2, y2) for x2 in range(x-1, x+2)
+                for y2 in range(y-1, y+2)
+                if (-1 < x <= X and
+                    -1 < y <= Y and
+                    (x != x2 or y != y2) and
+                    (0 <= x2 <= X) and
+                    (0 <= y2 <= Y))]
+    pass
+
+    def setFieldsUnavailable(self, neighbours):
+        #neighbours = [(8, 1), (8, 2), (8, 3), (9, 1), (9, 3), (10, 1), (10, 2), (10, 3)]
+        for field in neighbours:
+            row = field[0]
+            column = field[1]
+            #self.table[row][column]["bg"] = "yellow"
+            #self.shipCoordinates.update_matrix(row, column, "x")
+
     def ifAvailable(self, row, column, size, alignment):
-        # alignment; horizontal = 1, veritcal = 2
+        # alignment; horizontal = 1, vertical= 2        
         available = False
-        for i in range(0, size + 1):
+        for i in range(size):     
             if alignment is 1:  # check horizontal
                 if self.shipCoordinates.matrix[row + i][column] == '':
                     available = True
-                else:
-                    available = False
+                else: 
+                    return False
             else:  # check vertical
                 if self.shipCoordinates.matrix[row][column + i] == '':
                     available = True
                 else:
-                    available = False
+                    return False
         return available
 
-    # check surrounding blocks, return true if neighbours are empty
-    def checkNeighbours(self, row, column):
-        # available = False
-        # row_limit = 9
-        # if row_limit > 0:
-        #   column_limit = 9
-        #   for x in range(max(0,row-1),min(row+1,row_limit)):
-        #     for y in range(column-1,min(column+1,column_limit)):
-        #       if x != row or y != column:
-        #         if self.shipCoordinates.matrix[x][y] == '' :
-        #           available = False
-        #         else:
-        #           available = True
-        # return
-        pass
+    # return neighbours of [x,y]
 
     def check_field_valid(self):
-        print('validity check')
+       # print('validity check')
         return True
