@@ -36,8 +36,9 @@ class Window:
         self.buttonClearShips = Button(self.master.root, text="Clear ships", command=self.master.clear_ships)
         self.buttonClearShips.grid(row=11, column=20)
         self.buttonCheat = Button(self.master.root, text="Cheat", command=self.master.cheatActivate)
+        self.buttonCheat.grid(row=12, column=20)
         self.buttonComputerCheat = Button(self.master.root, text="Computer cheat", command=self.master.computerCheat)
-
+        
     def init_image(self):
         self.img = Label(self.master.root)
         gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',

@@ -119,15 +119,17 @@ class Player:
         available = False
         for i in range(size):     
             if alignment is 1:  # check horizontal
-                coords = self.neighbors(row+i,colum)
-                self.setFieldsUnavailable(coords)
+                #coords = self.neighbors(row+i, column)
+                #print(coords)
+                #self.setFieldsUnavailable(coords)
                 if self.shipCoordinates.matrix[row + i][column] == '':
                     available = True
                 else: 
                     return False
             else:  # check vertical
-                coords = self.neighbors(row,colum+i)
-                self.setFieldsUnavailable(coords)
+                #coords = self.neighbors(row, column+i)
+                #print(coords)
+                #self.setFieldsUnavailable(coords)
                 if self.shipCoordinates.matrix[row][column + i] == '':
                     available = True
                 else:
