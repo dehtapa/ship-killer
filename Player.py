@@ -111,7 +111,7 @@ class Player:
         for field in neighbours:
             row = field[0]
             column = field[1]
-            #self.table[row][column]["bg"] = "yellow"
+            self.table[row][column]["bg"] = "yellow"
             #self.shipCoordinates.update_matrix(row, column, "x")
 
     def ifAvailable(self, row, column, size, alignment):
@@ -119,11 +119,15 @@ class Player:
         available = False
         for i in range(size):     
             if alignment is 1:  # check horizontal
+                coords = self.neighbors(row+i,colum)
+                self.setFieldsUnavailable(coords)
                 if self.shipCoordinates.matrix[row + i][column] == '':
                     available = True
                 else: 
                     return False
             else:  # check vertical
+                coords = self.neighbors(row,colum+i)
+                self.setFieldsUnavailable(coords)
                 if self.shipCoordinates.matrix[row][column + i] == '':
                     available = True
                 else:

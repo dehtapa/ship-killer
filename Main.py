@@ -20,9 +20,9 @@ class Game:
     gameRound = 0
     engine = pyttsx3.init()
     messages = {
-        'score': ['Eltaláltam, menő vagyok', 'Talált, kezdők szerencséje.'],
-        'fault': ['Nem talált, biztos csaltál és arréb raktad a hajódat', 'Már megint elbénáztad!'],
-        'ship': ['A király ismét süllyesztett', 'Elsüllyedt! Beszarok milyen mákod van!']
+        'score': ['Eltaláltam, menő vagyok', 'Talált! kezdők szerencséje.'],
+        'fault': ['Nem talált, biztos csaltál!', 'Már megint elbénáztad!'],
+        'ship': ['A király ismét süllyesztett', 'Elsüllyedt! Mázlista!']
     }
 
     def __init__(self, root, numberOfShips, rows):
@@ -38,8 +38,8 @@ class Game:
         table1 = self.draw_table(1, self.rows, 0, 0)
         table2 = self.draw_table(2, self.rows, 0, 40)
         self.player = {
-            1: Player(self,1, 'Player1', table1, False, self.numberOfShips, self.rows),
-            2: Player(self,2, 'Player2', table2, True, self.numberOfShips, self.rows)
+            1: Player(self, 1, 'Player1', table1, False, self.numberOfShips, self.rows),
+            2: Player(self, 2, 'Player2', table2, True, self.numberOfShips, self.rows)
         }
         self.window.message1.set("%s is placing her/his ships. " % self.player[self.currentPlayer].name)
         self.window.message2.set(self.player[self.currentPlayer].get_ship_message()[0])
@@ -47,17 +47,16 @@ class Game:
         self.window.message4.set(self.player[self.currentPlayer].get_ship_message()[2])
         self.window.message5.set(value=self.player[self.currentPlayer].get_ship_message()[3])
 
-     
         self.engine.setProperty('voice', 'hungarian')
 
         self.root.after(
-            3000, lambda: self.say('Rakd le a hajóidat vazzze!'))
-  
+            3000, lambda: self.say('Rakd le a hajóidat!'))
         # def auto_fill(self):
         # self.buttonFired(self.currentPlayer, 4,4)
         # self.buttonFired(self.currentPlayer, 5,3)
         # self.buttonFired(self.currentPlayer, 6,6)
-    def say (self, text):
+
+    def say(self, text):
         self.engine.say(text)
         self.engine.runAndWait()
 
@@ -87,7 +86,6 @@ class Game:
                 table[x][y].grid(row=shiftX + y, column=shiftY + x)
         return table
 
-
     def shut(self):
         # playsound.playsound('Cannon+5.wav', True)
         row = random.randint(1, self.rows)
@@ -100,6 +98,7 @@ class Game:
                 target = self.player[2].shipCoordinates.matrix[x][y]
                 if str(target).isdigit() is True:
                     self.player[2].table[x][y]["bg"] = "blue"
+
     def computerCheat(self):
         self.player[2].robot = False
 
@@ -122,23 +121,23 @@ class Game:
         self.root.after(
             1000, lambda: self.window.message1.set('Player1 is shooting'))
 
-    def buttonFired(self, id, row, column):        
+    def buttonFired(self, id, row, column):
         if id == self.currentPlayer:
             if self.gameStatus == 2:
                 self.window.run_animate(0)
-                playsound.playsound('Torpedo+Explosion.wav', True)
+                playsound.playsound('/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/Torpedo+Explosion.wav', True)
 
                 messageId = self.player[self.currentPlayer].get_shot(row, column)
                 message = self.messages[messageId][self.currentPlayer - 1]
                 if messageId == 'score' or messageId == 'ship':
-                    playsound.playsound('Explosion+9.wav', True)
+                    playsound.playsound('/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/Explosion+9.wav', True)
                 self.window.message7.set(message)
                 self.say(message)
 
                 robot = self.player[self.currentPlayer].robot
 
                 self.window.message1.set('%s is shooting' %
-                                 self.player[self.currentPlayer].name)
+                                         self.player[self.currentPlayer].name)
                 self.window.message3.set(
                     '%s/%s' %
                     (self.player[1].destroyedShips, self.numberOfShips))
@@ -146,7 +145,7 @@ class Game:
                     '%s/%s' %
                     (self.player[2].destroyedShips, self.numberOfShips))
                 if self.player[2].destroyedShips == self.numberOfShips:
-                    self.winner = 1                    
+                    self.winner = 1
                     self.window.message1.set(
                         '%s won the game!!!' %
                         self.player[1].name)
@@ -162,7 +161,7 @@ class Game:
                 else:
                     self.currentPlayer = 1
                 self.window.message6.set('%s fired x: %s, y:%s' %
-                                  (self.player[self.currentPlayer].name, row, column))
+                                         (self.player[self.currentPlayer].name, row, column))
                 if robot is True and self.winner == 0:
                     self.root.after(3000, lambda: self.shut())
 
@@ -190,7 +189,7 @@ class Game:
                     self.window.message5.set(newMessage[3])
 
 
-def main(numberOfShips, rows, width, height): #run mianloop 
+def main(numberOfShips, rows, width, height):  # run mianloop
     root = tk.Tk()
     root.geometry("%sx%s" % (width, height))
     app = Game(root, numberOfShips, rows)
@@ -198,4 +197,4 @@ def main(numberOfShips, rows, width, height): #run mianloop
 
 
 if __name__ == '__main__':
-    main(2, 10, 1200, 900)
+    main(4, 10, 1200, 900)

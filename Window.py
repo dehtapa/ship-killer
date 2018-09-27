@@ -18,7 +18,7 @@ class Window:
         self.init_messages()
         self.init_buttons()
         self.init_image()
-        #self.run_animate()
+        # self.run_animate()
 
     def init_messages(self):
         Label(self.master.root, textvariable=self.message1, fg="blue", font=("Helvetica", 16)).grid(row=0, column=20)
@@ -30,7 +30,8 @@ class Window:
         Label(self.master.root, textvariable=self.message7, fg="red", font=("Helvetica", 16)).grid(row=7, column=20)
 
     def init_buttons(self):
-        self.buttonCreateShips = Button(self.master.root, text="Create ships automatically", command=self.master.auto_fill_both)
+        self.buttonCreateShips = Button(self.master.root, text="Create ships automatically",
+                                        command=self.master.auto_fill_both)
         self.buttonCreateShips.grid(row=9, column=20)
         self.buttonClearShips = Button(self.master.root, text="Clear ships", command=self.master.clear_ships)
         self.buttonClearShips.grid(row=11, column=20)
@@ -39,30 +40,33 @@ class Window:
 
     def init_image(self):
         self.img = Label(self.master.root)
-        gif1 = PhotoImage(file='giphy.gif',format = 'gif -index %s' % 0)
-        self.img.image = gif1 
+        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+                          format='gif -index %s' % 0)
+        self.img.image = gif1
         self.img.configure(image=gif1)
-        self.img.grid(row = 13, column = 20, columnspan = 2, sticky=NW)
+        self.img.grid(row=13, column=20, columnspan=2, sticky=NW)
         self.counter = 0
-    
+
     def run_animate(self, ind):
-        self.counter += 1        
-        gif1 = PhotoImage(file='giphy.gif',format = 'gif -index %s' % ind)
+        self.counter += 1
+        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+                          format='gif -index %s' % ind)
         ind += 1
-        self.img.image = gif1 
+        self.img.image = gif1
         self.img.configure(image=gif1)
-        if self.counter <12:
+        if self.counter < 12:
             self.master.root.after(
                 200, lambda: self.run_animate(ind))
         else:
             self.counter = 0
-            gif1 = PhotoImage(file='giphy.gif',format = 'gif -index %s' % 0)
-            self.img.image = gif1 
+            gif1 = PhotoImage(
+                file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif', format='gif -index %s' % 0)
+            self.img.image = gif1
             self.img.configure(image=gif1)
-
 
     def change_image(self, ind):
         print(ind)
-        gif1 = PhotoImage(file='giphy.gif',format = 'gif -index %s' % ind)
-        self.img.image = gif1 
+        gif1 = PhotoImage(file='/home/toybox/codecool/python-projects/4th-TW-week/ship-killer/giphy.gif',
+                          format='gif -index %s' % ind)
+        self.img.image = gif1
         self.img.configure(image=gif1)
