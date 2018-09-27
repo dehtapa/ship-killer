@@ -4,8 +4,9 @@ import random
 
 
 class Player:
-    def __init__(self, id, name, table, robot, numberOfShips, rows):
+    def __init__(self, master, id, name, table, robot, numberOfShips, rows):
         self.maxNumberOfShips = numberOfShips
+        self.master = master
         self.rows = rows
         self.ships = {}
         self.currentShip = numberOfShips
@@ -32,11 +33,11 @@ class Player:
             self.ships[target].destroy()
             if self.ships[target].isDestroyed():
                 self.destroyedShips += 1
-                return 'Talált!!! Süllyedt!!!'
-            return 'Talált!!!!!!!'
+                return 'ship'
+            return 'score'
         else:
             self.table[row][column]["bg"] = "grey"
-            return 'Nem talált!'
+            return 'fault'
 
     def place_ships(self, row, column):
         if self.check_field_valid():
@@ -46,7 +47,11 @@ class Player:
                 self.table[row][column]["bg"] = "green"
             self.ships[self.currentShip].build()
             if self.ships[self.currentShip].isBuilt() is True:
+                texts = ['Na végre!', 'Elaludtál?!', 'Még ma sikerül leraknod?', 'Na mi van már?']
                 self.currentShip -= 1
+                if self.id is 1:
+                    self.master.say(texts[self.currentShip])
+
             if self.currentShip <= 0:
                 return 'next'
             else:
