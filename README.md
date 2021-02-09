@@ -1,3 +1,2 @@
 # ship-killer
-gesg
-teszt
+Battleship game in phyton.
